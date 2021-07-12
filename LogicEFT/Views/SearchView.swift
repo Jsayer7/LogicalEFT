@@ -29,6 +29,7 @@ struct SearchView: View {
                     .navigationTitle("LogicalEFT")
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .alert(isPresented: $viewModel.isShowingError, content: {
             Alert(title: Text("Error"), message: Text("Ther was an error with the request: \(viewModel.error?.description ?? "Unknown error. Please try again")"), dismissButton: .default(Text("OK")))
         })

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SearchView.swift
 //  LogicEFT
 //
 //  Created by James Sayer on 7/8/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct SearchView: View {
     
     /// The view model
     @ObservedObject private var viewModel = SearchViewModel()
@@ -29,11 +29,14 @@ struct ContentView: View {
                     .navigationTitle("LogicalEFT")
             }
         }
+        .alert(isPresented: $viewModel.isShowingError, content: {
+            Alert(title: Text("Error"), message: Text("Ther was an error with the request: \(viewModel.error?.description ?? "Unknown error. Please try again")"), dismissButton: .default(Text("OK")))
+        })
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SearchView()
     }
 }

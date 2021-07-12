@@ -71,6 +71,11 @@ struct EFTItem: Decodable, Identifiable {
         return URL(string: imgBig)
     }
     
+    /// The price of the item, formatted nicely as a string
+    var priceString: String {
+        return PriceFormatter.shared.formatter.string(from: NSNumber(value: price)) ?? "Unknown"
+    }
+    
     /// The last time the data was updated (in Date format)
     var lastUpdatedDate: Date? {
         let dateFormatter = ISO8601DateFormatter()
@@ -91,15 +96,41 @@ struct EFTItem: Decodable, Identifiable {
         let hourString = hours > 1 ? "hours" : "hour"
         
         if hours == 0 {
-            return "Last Updated: \(minutes) minutes ago"
+            return "\(minutes) minutes ago"
         } else {
-            return "Last Updated: \(hours) \(hourString) ago"
+            return "\(hours) \(hourString) ago"
         }
     }
     
     /// The price per slot of the item
     var pricePerSlot: Double {
-        return Double(price / slots).rounded()
+        return Double(price / slots).rounded(.toNearestOrEven)
+    }
+    
+    /// The price of the item, formatted as a price, in string format.
+    var formattedPriceString: String {
+        return PriceFormatter.shared.formatter.string(from: NSNumber(value: price)) ?? "Unknown"
+    }
+    
+    var formattedTraderPriceString: String {
+        return PriceFormatter.shared.formatter.string(from: NSNumber(value: traderPrice)) ?? "Unknown"
+    }
+    
+    var pricePerSlot2: String {
+        let pricePer = Double(price / slots)
+        let price = PriceFormatter.shared.formatter.string(from: NSNumber(value: pricePer))
+        
+        return price ?? "Unknown"
+    }
+    
+    /// The average price of the item in the past 24 hours, formatted nicely as a string
+    var twentyFourHourAveragePrice: String {
+        return PriceFormatter.shared.formatter.string(from: NSNumber(value: avg24hPrice)) ?? "Unknown"
+    }
+    
+    /// The average price of the item in the past 7 days, formatted nicely as a string
+    var sevenDayAveragePrice: String {
+        return PriceFormatter.shared.formatter.string(from: NSNumber(value: avg7daysPrice)) ?? "Unknown"
     }
     
     /// The formatted string of price movement in % over the last 24 hours
@@ -120,5 +151,10 @@ struct EFTItem: Decodable, Identifiable {
     /// The color of the price movement over the last 7 days. Green if +, red if -
     var diff7dColor: Color {
         return diff7days >= 0.0 ? .green : .red
+    }
+    
+    /// The trader that will buy back the item, along with their buyback price and currency symbol
+    var traderBuybackString: String {
+        return "\(traderName) - \(formattedTraderPriceString)\(traderPriceCur)"
     }
 }

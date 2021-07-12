@@ -51,7 +51,7 @@ struct EFTItemDetailView: View {
         var items: [EFTDetailItem] = []
         let price = EFTDetailItem(iconName: "clock", title: "\(item.priceString)", subtitle: "Latest Price")
         let lastUpdated = EFTDetailItem(iconName: "calendar", title: item.hoursSinceLastUpdate, subtitle: "Last Updated")
-        let pricePerSlot = EFTDetailItem(iconName: "square.grid.3x3.topleft.fill", title: item.pricePerSlot2, subtitle: "Price Per Slot")
+        let pricePerSlot = EFTDetailItem(iconName: "square.grid.3x3.topleft.fill", title: item.pricePerSlotString, subtitle: "Price Per Slot")
         let buyback = EFTDetailItem(iconName: "cart", title: item.traderBuybackString, subtitle: "Trader Buyback")
         let dayAverage = EFTDetailItem(iconName: "24.circle", title: item.twentyFourHourAveragePrice, subtitle: "24 Hour Average Price: \(item.diff24hString)", color: item.diff24hColor)
         let weekAverage = EFTDetailItem(iconName: "7.circle", title: item.sevenDayAveragePrice, subtitle: "7 Day Average Price: \(item.diff7dString)", color: item.diff7dColor)

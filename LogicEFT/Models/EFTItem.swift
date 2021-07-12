@@ -112,11 +112,13 @@ struct EFTItem: Decodable, Identifiable {
         return PriceFormatter.shared.formatter.string(from: NSNumber(value: price)) ?? "Unknown"
     }
     
+    /// The price that the trader will buy back the item for, formatted in pretty string format
     var formattedTraderPriceString: String {
         return PriceFormatter.shared.formatter.string(from: NSNumber(value: traderPrice)) ?? "Unknown"
     }
     
-    var pricePerSlot2: String {
+    /// The price per slot of the item, formatted as a price, in string format
+    var pricePerSlotString: String {
         let pricePer = Double(price / slots)
         let price = PriceFormatter.shared.formatter.string(from: NSNumber(value: pricePer))
         
